@@ -11,7 +11,8 @@
     "verified": "10.272"
   },
   "authors": [{
-    "name": "Asacolips"
+    "name": "BadIdeasBureau",
+    "discord": "BadIdeasBureau#7024"
   }],
   "esmodules": ["module/trespasser.mjs"],
   "styles": ["css/trespasser.css"],
@@ -26,8 +27,8 @@
   ],
   "gridDistance": 5,
   "gridUnits": "ft",
-  "primaryTokenAttribute": "health",
-  "secondaryTokenAttribute": "power",
+  "primaryTokenAttribute": "hp",
+  "secondaryTokenAttribute": "effort",
   "url": "",
   "manifest": "",
   "download": "",

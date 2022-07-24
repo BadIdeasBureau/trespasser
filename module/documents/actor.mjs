@@ -17,6 +17,56 @@ export class TrespasserActor extends Actor {
   prepareBaseData() {
     // Data modifications in this step occur before processing embedded
     // documents or derived data.
+    const actorData = this;
+    const systemData = actorData.system;
+    const flags = actorData.flags.trespasser || {};
+
+    // Make separate methods for each Actor type (character, npc, etc.) to keep
+    // things organized.
+    this._prepareBaseCharacterData(actorData);
+    this._prepareBaseNpcData(actorData);
+  }
+
+  /**
+   * Prepare Character type specific data
+   */
+   _prepareBaseCharacterData(actorData) {
+    if (actorData.type !== 'character') return;
+
+    // Make modifications to data here. For example:
+    const systemData = actorData.system;
+
+    // Loop through ability scores, and add their modifiers to our sheet output.
+    for (let [key, attribute] of Object.entries(systemData.attributes)) {
+      // Calculate the modifier using d20 rules.
+      attribute.mod = Math.floor((attribute.value - 10) / 2);
+    }
+
+    //calculate level scaling values
+    systemData.potency = {
+      size: CONFIG.trespasser.levelScaling[systemData.info.level].potency,
+      dice: "d" + CONFIG.trespasser.levelScaling[systemData.info.level].potency
+    }
+
+    systemData.skillBonus = CONFIG.trespasser.levelScaling[systemData.info.level].skillBonus
+
+    systemData.reactions = Math.floor(systemData.attributes.agi.value/5)
+
+    systemData.effort.max = 4 + Math.floor(systemData.info.level/2)
+
+    systemData.recovery.max = 8 + systemData.attributes.res.mod
+
+  }
+
+  /**
+   * Prepare NPC type specific data.
+   */
+  _prepareBaseNpcData(actorData) {
+    if (actorData.type !== 'npc') return;
+
+    // Make modifications to data here. For example:
+    const systemData = actorData.system;
+    systemData.xp = (systemData.cr * systemData.cr) * 100;
   }
 
   /**
@@ -35,35 +85,49 @@ export class TrespasserActor extends Actor {
 
     // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
-    this._prepareCharacterData(actorData);
-    this._prepareNpcData(actorData);
+    this._prepareDerivedCharacterData(actorData);
+    this._prepareDerivedNpcData(actorData);
   }
 
   /**
    * Prepare Character type specific data
    */
-  _prepareCharacterData(actorData) {
+  _prepareDerivedCharacterData(actorData) {
     if (actorData.type !== 'character') return;
 
     // Make modifications to data here. For example:
     const systemData = actorData.system;
 
-    // Loop through ability scores, and add their modifiers to our sheet output.
-    for (let [key, ability] of Object.entries(systemData.abilities)) {
+    //Calculate total AC
+    const ac = systemData.ac
+    ac.value = ac.base + ac.bonus + ac.armor 
+
+    //initiative
+
+    systemData.init = systemData.skillBonus + systemData.bonus.init + systemData.attributes.cun.mod
+
+    //skilled modifiers
+
+    for (let [key, attribute] of Object.entries(systemData.attributes)) {
       // Calculate the modifier using d20 rules.
-      ability.mod = Math.floor((ability.value - 10) / 2);
+      attribute.skilled = attribute.mod + systemData.skillBonus;
     }
+
   }
 
   /**
    * Prepare NPC type specific data.
    */
-  _prepareNpcData(actorData) {
+  _prepareDerivedNpcData(actorData) {
     if (actorData.type !== 'npc') return;
 
     // Make modifications to data here. For example:
     const systemData = actorData.system;
-    systemData.xp = (systemData.cr * systemData.cr) * 100;
+
+    //Calculate total AC
+    const ac = systemData.ac
+    ac.value = ac.base + ac.bonus + ac.armor 
+
   }
 
   /**
@@ -87,16 +151,12 @@ export class TrespasserActor extends Actor {
 
     // Copy the ability scores to the top level, so that rolls can use
     // formulas like `@str.mod + 4`.
-    if (data.abilities) {
-      for (let [k, v] of Object.entries(data.abilities)) {
+    if (data.attributes) {
+      for (let [k, v] of Object.entries(data.attributes)) {
         data[k] = foundry.utils.deepClone(v);
       }
     }
 
-    // Add level for easier access, or fall back to 0.
-    if (data.attributes.level) {
-      data.lvl = data.attributes.level.value ?? 0;
-    }
   }
 
   /**

@@ -1,72 +1,180 @@
 {
   "Actor": {
-    "types": ["character", "npc"],
+    "types": [
+      "character",
+      "npc"
+    ],
     "templates": {
       "base": {
-        "health": {
+        "hp": {
           "value": 10,
-          "min": 0,
           "max": 10
         },
-        "power": {
-          "value": 5,
-          "min": 0,
-          "max": 5
+        "ac": {
+          "base": 10,
+          "armor": 0,
+          "weight": 0,
+          "bonus": 0
+        },
+        "speed": 30,
+        "attributes": {
+          "str": {
+            "value": 10
+          },
+          "agi": {
+            "value": 10
+          },
+          "vig": {
+            "value": 10
+          },
+          "kno": {
+            "value": 10
+          },
+          "cun": {
+            "value": 10
+          },
+          "res": {
+            "value": 10
+          }
+        },
+        "info": {
+          "level": 0
+        },
+        "damage": {
+          "resistance": [],
+          "vulnerability": [],
+          "immunity": []
         },
         "biography": ""
       }
     },
     "character": {
-      "templates": ["base"],
-      "attributes": {
-        "level": {
-          "value": 1
-        }
+      "templates": [
+        "base"
+      ],
+      "info": {
+        "species": "human",
+        "class": "peasant",
+        "themes": "",
+        "profession": "",
+        "alignment": [
+          "",
+          ""
+        ],
+        "level": 0,
+        "xp": 0
       },
-      "abilities": {
+      "attributes": {
         "str": {
           "value": 10
         },
-        "dex": {
+        "agi": {
           "value": 10
         },
-        "con": {
+        "vig": {
           "value": 10
         },
-        "int": {
+        "kno": {
           "value": 10
         },
-        "wis": {
+        "cun": {
           "value": 10
         },
-        "cha": {
+        "res": {
           "value": 10
         }
+      },
+      "skills": {
+        "acr": false,
+        "ath": false,
+        "cre": false,
+        "let": false,
+        "mys": false,
+        "nat": false,
+        "per": false,
+        "spe": false,
+        "ste": false,
+        "tin": false
+      },
+      "effort": {
+        "value": 0
+      },
+      "recovery": {
+        "value": 0
+      },
+      "bonus": {
+        "init" : 0
       }
     },
     "npc": {
-      "templates": ["base"],
-      "cr": 0
+      "templates": [
+        "base"
+      ],
+      "info": {
+        "size": 1
+      },
+      "reactions": 2,
+      "init": 10,
+      "elite": false,
+      "attributes": {
+        "str": {
+          "mod": 0
+        },
+        "agi": {
+          "mod": 0
+        },
+        "vig": {
+          "mod": 0
+        },
+        "kno": {
+          "mod": 0
+        },
+        "cun": {
+          "mod": 0
+        },
+        "res": {
+          "mod": 0
+        }
+      }
     }
   },
   "Item": {
-    "types": ["item", "feature", "spell"],
+    "types": [
+      "weapon",
+      "armor",
+      "consumable",
+      "misc",
+      "holding",
+      "feature",
+      "action",
+      "spell"
+    ],
     "templates": {
       "base": {
         "description": ""
-      }
+      },
+      "inventory": {
+        "size": 1
+      },
+      "rollable": {}
     },
     "item": {
-      "templates": ["base"],
+      "templates": [
+        "base"
+      ],
       "quantity": 1,
       "weight": 0,
       "formula": "d20 + @str.mod + ceil(@lvl / 2)"
     },
     "feature": {
-      "templates": ["base"]
+      "templates": [
+        "base"
+      ]
     },
     "spell": {
-      "templates": ["base"],
+      "templates": [
+        "base"
+      ],
       "spellLevel": 1
     }
   }

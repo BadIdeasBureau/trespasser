@@ -1,22 +1,60 @@
 {
-  "BOILERPLATE.AbilityStr": "Strength",
-  "BOILERPLATE.AbilityCon": "Constitution",
-  "BOILERPLATE.AbilityDex": "Dexterity",
-  "BOILERPLATE.AbilityInt": "Intelligence",
-  "BOILERPLATE.AbilityWis": "Wisdom",
-  "BOILERPLATE.AbilityCha": "Charisma",
+  "TRESPASSER":{
+    "Ability": {
+      "Str":{
+        "Name": "Strength",
+        "Mod": "STR"
+      },
+      "Vig":{
+        "Name": "Vigor",
+        "Mod": "VIG"
+      },
+      "Agi":{
+        "Name": "Agility",
+        "Mod": "AGI"
+      },
+      "Kno":{
+        "Name": "Knowledge",
+        "Mod": "KNO"
+      },
+      "Cun":{
+        "Name": "Cunning",
+        "Mod": "CUN"
+      },
+      "Res":{
+        "Name": "Resolve",
+        "Mod": "RES"
+      }
+    },
+    "Effect":{
+      "Create": "Create Effect",
+      "Toggle": "Toggle Effect",
+      "Edit": "Edit Effect",
+      "Delete": "Delete Effect"
+    },
+    "Actor":{
 
-  "BOILERPLATE.AbilityStrAbbr": "str",
-  "BOILERPLATE.AbilityConAbbr": "con",
-  "BOILERPLATE.AbilityDexAbbr": "dex",
-  "BOILERPLATE.AbilityIntAbbr": "int",
-  "BOILERPLATE.AbilityWisAbbr": "wis",
-  "BOILERPLATE.AbilityChaAbbr": "cha",
+      "Name":"Name",
+      "Species":"Species",
+      "Class":"Class",
+      "Themes":"Themes",
+      "Profession":"Profession",
+      "Alignment":"Alignment",
 
-  "BOILERPLATE.EffectCreate": "Create Effect",
-  "BOILERPLATE.EffectToggle": "Toggle Effect",
-  "BOILERPLATE.EffectEdit": "Edit Effect",
-  "BOILERPLATE.EffectDelete": "Delete Effect",
+      "SkillBonus":"Skill Bonus",
+      "Initiative":"Initiative",
+      "ArmorClass":"AC",
+      "Potency":"Potency",
+      "Speed":"Speed",
+      "Reactions":"Reactions",
+      "HitPoints":"HP",
+      "Effort":"Effort",
+      "Recovery":"Recovery",
 
-  "BOILERPLATE.Add": "Add"
+      "Level": "Level",
+      "XP": "XP"
+    },
+    "Add": "Add"
+  }
+
 }

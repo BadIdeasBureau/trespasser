@@ -68,8 +68,8 @@ export class TrespasserActorSheet extends ActorSheet {
    */
   _prepareCharacterData(context) {
     // Handle ability scores.
-    for (let [k, v] of Object.entries(context.system.abilities)) {
-      v.label = game.i18n.localize(CONFIG.BOILERPLATE.abilities[k]) ?? k;
+    for (let [k, v] of Object.entries(context.system.attributes)) {
+      v.label = game.i18n.localize(CONFIG.trespasser.attributes[k]) ?? k;
     }
   }
 
@@ -153,7 +153,7 @@ export class TrespasserActorSheet extends ActorSheet {
     // Active Effect management
     html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));
 
-    // Rollable abilities.
+    // Rollable attributes.
     html.find('.rollable').click(this._onRoll.bind(this));
 
     // Drag events for macros.
@@ -215,11 +215,11 @@ export class TrespasserActorSheet extends ActorSheet {
 
     // Handle rolls that supply the formula directly.
     if (dataset.roll) {
-      let label = dataset.label ? `[ability] ${dataset.label}` : '';
+      let flavor = dataset.label ? `${dataset.label}` : '';
       let roll = new Roll(dataset.roll, this.actor.getRollData());
       roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: label,
+        flavor,
         rollMode: game.settings.get('core', 'rollMode'),
       });
       return roll;

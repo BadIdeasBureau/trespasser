@@ -1,19 +1,24 @@
 // Import document classes.
 import { TrespasserActor } from "./documents/actor.mjs";
 import { TrespasserItem } from "./documents/item.mjs";
+import { TrespasserCombatant } from "./documents/combatant.mjs";
 // Import sheet classes.
 import { TrespasserActorSheet } from "./sheets/actor-sheet.mjs";
 import { TrespasserItemSheet } from "./sheets/item-sheet.mjs";
+//import { TrespasserCombatSheet } from "./sheets/combat-sheet.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
-import { BOILERPLATE } from "./helpers/config.mjs";
+import { trespasser } from "./helpers/config.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
+console.log("TRESPASSER file started")
+// Add custom constants for configuration.
+CONFIG.trespasser = trespasser;
 
-Hooks.once('init', async function() {
-
+  Hooks.once('init', async function() {
+  console.log("trespasser init hook")
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   game.trespasser = {
@@ -22,15 +27,14 @@ Hooks.once('init', async function() {
     rollItemMacro
   };
 
-  // Add custom constants for configuration.
-  CONFIG.BOILERPLATE = BOILERPLATE;
+
 
   /**
    * Set an initiative formula for the system
    * @type {String}
    */
   CONFIG.Combat.initiative = {
-    formula: "1d20 + @abilities.dex.mod",
+    formula: "1d20 + @attributes.cun.mod + @skillBonus + @initBonus",
     decimals: 2
   };
 
