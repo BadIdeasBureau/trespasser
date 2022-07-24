@@ -52,7 +52,9 @@
       "Recovery":"Recovery",
 
       "Level": "Level",
-      "XP": "XP"
+      "XP": "XP",
+
+      "Size":"Size"
     },
     "Add": "Add"
   }

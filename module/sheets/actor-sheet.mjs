@@ -39,6 +39,11 @@ export class TrespasserActorSheet extends ActorSheet {
     context.system = actorData.system;
     context.flags = actorData.flags;
 
+    //label ability scores
+    for (let [k, v] of Object.entries(context.system.attributes)) {
+      v.label = game.i18n.localize(CONFIG.trespasser.attributes[k]) ?? k;
+    }
+
     // Prepare character data and items.
     if (actorData.type == 'character') {
       this._prepareItems(context);
@@ -67,10 +72,8 @@ export class TrespasserActorSheet extends ActorSheet {
    * @return {undefined}
    */
   _prepareCharacterData(context) {
-    // Handle ability scores.
-    for (let [k, v] of Object.entries(context.system.attributes)) {
-      v.label = game.i18n.localize(CONFIG.trespasser.attributes[k]) ?? k;
-    }
+
+
   }
 
   /**
