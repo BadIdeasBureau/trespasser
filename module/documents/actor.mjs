@@ -43,18 +43,25 @@ export class TrespasserActor extends Actor {
     }
 
     //calculate level scaling values
+    const level = systemData.info.level
+    const thisLevel = CONFIG.trespasser.levelScaling[level]
+
     systemData.potency = {
-      size: CONFIG.trespasser.levelScaling[systemData.info.level].potency,
-      dice: "d" + CONFIG.trespasser.levelScaling[systemData.info.level].potency
+      size: thisLevel.potency,
+      dice: "d" + thisLevel.potency
     }
 
-    systemData.skillBonus = CONFIG.trespasser.levelScaling[systemData.info.level].skillBonus
+    systemData.skillBonus = thisLevel.skillBonus
 
-    systemData.reactions = Math.floor(systemData.attributes.agi.value/5)
+    systemData.effort.max = thisLevel.effort
 
-    systemData.effort.max = 4 + Math.floor(systemData.info.level/2)
+    systemData.info.xpToNext = CONFIG.trespasser.levelScaling[level+1]?.minXp ?? Infinity
 
-    systemData.recovery.max = 8 + systemData.attributes.res.mod
+    //calculate stat scaling values
+    
+    systemData.reactions = level ? Math.floor(systemData.attributes.agi.value/5) : 0
+
+    systemData.recovery.max = level ? 8 + systemData.attributes.res.mod : 0
 
   }
 
@@ -66,7 +73,6 @@ export class TrespasserActor extends Actor {
 
     // Make modifications to data here. For example:
     const systemData = actorData.system;
-    systemData.xp = (systemData.cr * systemData.cr) * 100;
   }
 
   /**

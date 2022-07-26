@@ -9,6 +9,7 @@ import { TrespasserItemSheet } from "./sheets/item-sheet.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { trespasser } from "./helpers/config.mjs";
+import { itemDataModels } from "./datamodels/item-datamodels.mjs"
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -16,6 +17,7 @@ import { trespasser } from "./helpers/config.mjs";
 console.log("TRESPASSER file started")
 // Add custom constants for configuration.
 CONFIG.trespasser = trespasser;
+CONFIG.Item.systemDataModels = itemDataModels
 
   Hooks.once('init', async function() {
   console.log("trespasser init hook")

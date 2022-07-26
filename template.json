@@ -142,40 +142,127 @@
     "types": [
       "weapon",
       "armor",
-      "consumable",
-      "misc",
-      "holding",
+      "shield",
+      "miscitem",
+      "mainAction",
+      "spell",
       "feature",
-      "action",
-      "spell"
+      "activeTalent",
+      "passiveTalent"
     ],
     "templates": {
       "base": {
         "description": ""
       },
       "inventory": {
-        "size": 1
+        "size": 1,
+        "equippable": ["inventory"]
       },
-      "rollable": {}
+      "costsEffort":{
+        "effort": {
+          "base": 0,
+          "scaling": 0,
+          "used": 0
+        }
+      },
+      "mainAction": {
+        "attribute": null,
+        "keywords": {
+          "attribute:": "str",
+          "type": "attack",
+          "implement": ["melee"],
+          "damage": "physical"
+        },
+        "target": {
+          "type": "personal",
+          "number": 0,
+          "size": 0,
+          "aoeTargets": "all"
+        },
+        "hit": {
+          "damage": null,
+          "conditions": null,
+          "chooseCondition": false,
+          "other": null,
+          "weaponEffect": false
+        },
+        "solid": {
+          "damage": null,
+          "conditions": null, 
+          "chooseCondition": false,
+          "other": null,
+          "weaponEffect": false
+        },
+        "after": {
+          "conditions": null,
+          "chooseCondition": false,
+          "other": null,
+          "weaponEffect": false
+        },
+        "field": null,
+        "special": null
+      },
+      "armor":{
+        "die": "",
+        "ac": 0,
+        "spent": false,
+        "broken": false
+      }
     },
-    "item": {
-      "templates": [
-        "base"
-      ],
-      "quantity": 1,
-      "weight": 0,
-      "formula": "d20 + @str.mod + ceil(@lvl / 2)"
+    "weapon":{
+      "templates": ["base", "inventory"],
+      "inventory": {
+        "equippable": ["inventory","hand"]
+      },
+      "melee": 0,
+      "range": 0,
+      "conjury":0,
+      "damage": "1d4",
+      "strReq": 0,
+      "effect":{
+        "damage": null,
+        "conditions": null,
+        "other": null
+      }
     },
-    "feature": {
-      "templates": [
-        "base"
-      ]
+    "armor":{
+      "templates": ["base", "inventory", "armor"],
+      "weight": "light"
     },
-    "spell": {
-      "templates": [
-        "base"
-      ],
-      "spellLevel": 1
+    "shield":{
+      "templates": ["base", "inventory", "armor"],
+      "strReq": 0,
+      "inventory": {
+        "equippable": ["inventory","hand"]
+      }
+    },
+    "miscItem":{
+      "templates": ["base", "inventory"],
+      "inventory":{
+        "quantity": 1
+      },
+      "consumable": true
+    },
+    "mainAction":{
+      "templates": ["base", "costsEffort", "mainAction"],
+      "actionSpeed": "main",
+      "actionType": "basic"
+    },
+    "spell":{
+      "templates": ["base"],
+      "used": 0,
+      "miscast": false
+    },
+    "feature":{
+      "templates": ["base", "costsEffort"],
+      "actionSpeed": "minor"
+    },
+    "activeTalent":{
+      "templates": ["base", "costsEffort"],
+      "actionSpeed": "minor"
+    },
+    "passiveTalent":{
+      "templates": ["base"]
     }
   }
 }
