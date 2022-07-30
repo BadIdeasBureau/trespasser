@@ -2,6 +2,7 @@
 import { TrespasserActor } from "./documents/actor.mjs";
 import { TrespasserItem } from "./documents/item.mjs";
 import { TrespasserCombatant } from "./documents/combatant.mjs";
+import { TrespasserCombat } from "./documents/combat.mjs";
 // Import sheet classes.
 import { TrespasserActorSheet } from "./sheets/actor-sheet.mjs";
 import { TrespasserItemSheet } from "./sheets/item-sheet.mjs";
@@ -43,6 +44,8 @@ CONFIG.Item.systemDataModels = itemDataModels
   // Define custom Document classes
   CONFIG.Actor.documentClass = TrespasserActor;
   CONFIG.Item.documentClass = TrespasserItem;
+  CONFIG.Combat.documentClass = TrespasserCombat;
+  CONFIG.Combatant.documentClass = TrespasserCombatant
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);

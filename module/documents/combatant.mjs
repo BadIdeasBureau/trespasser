@@ -4,24 +4,30 @@
  */
  export class TrespasserCombatant extends Combatant {
 
-  isNpc(){
-    return false //determine whether this is an NPC
+  get isMonster(){
+    return (this.actor?.type === "npc")
   }
   /** @override */
-  _onCreate(data,options,userId) {
-    super._onCreate(data,options,userId)
-    if(this.isNpc){
-    //find parent combat, determine if flags.trespasser.monsterInit is less than this monster's init
-    //if yes, set flag to this monster's init and rerollNPCs (will break delayed monsters...)
-    //if no, set this combatant's initiative to monsterInit
+  static async _onCreateDocuments(documents,context) {
+    for(let combatant of documents){
+      if(combatant.isMonster){
+        //find parent combat, determine if flags.trespasser.monsterInit is less than this monster's init
+        //if yes, set flag to this monster's init and rerollNPCs (will break delayed monsters...)
+        //if no, set this combatant's initiative to monsterInit
+        let combatantInit = combatant.actor?.system.init
+        let monsterInit = combatant.parent.flags?.trespasser?.monsterInit
+        if(combatantInit > monsterInit){
+          await combatant.combat.setFlag("trespasser", "monsterInit", combatantInit)
+        }
+      }
     }
   }
   /** @override */
-  rollInitiative(formula){
-    if(this.isNpc){
-        return super.rollInitiative(this.parent.getFlag("trespasser", "monsterInit"))
+  _getInitiativeFormula(){
+    if(this.isMonster){
+        return this.parent.getFlag("trespasser", "monsterInit").toString()
     } else {
-        return super.rollInitiative(formula)
+        return super._getInitiativeFormula()
     }
   }
 

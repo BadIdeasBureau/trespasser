@@ -33,10 +33,9 @@ const {
  const DataModel = foundry.abstract.DataModel
 
 function getChoices(config){
-    let choices = [...Object.keys(config)]
     return{
-        choices,
-        initial: choices[0]
+        choices: config,
+        initial: Object.keys(config)[0]
     }
 }
 
@@ -57,7 +56,7 @@ class EffectField extends SchemaField {
                         integer: true, 
                         required: true
                     }),
-                    target: new StringField({choices: ["self", "allTargets", "oneTarget", "newTarget"]})
+                    target: new StringField({...getChoices(trespasser.aoeTargets)})
                 }),
                 {
                     required: true,
@@ -117,7 +116,7 @@ class InventoryTemplateDataModel extends DataModel{
         return{
             inventory: new SchemaField({
                 equippable: new ArrayField( 
-                    new StringField(getChoices(trespasser.equippable)),
+                    new StringField({choices: trespasser.equippable}),
                     {
                         initial: ["inventory"],
                     }
@@ -188,7 +187,7 @@ class MainActionTemplateDataModel extends DataModel{
                 }),
                 implement: new ArrayField( 
                     new StringField({
-                        ...getChoices(trespasser.implements),
+                        choices:trespasser.implements,
                         required: true
                     }),
                     {
